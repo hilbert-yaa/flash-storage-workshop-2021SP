@@ -1,0 +1,43 @@
+#+TITLE: Content_Handout_rev2.1
+
+* [[https://zh.wikipedia.org/wiki/%E9%97%AA%E5%AD%98#NOR_Flash][General Intro & Development]]
+* [[~/UMJI/Flash_Workshop/assets/nand_flash.png][Explanation by Structural Levels]]
+** NAND Flash Explained (yaa)
+*** [[~/UMJI/Flash_Workshop/assets/FTL.jpg][FTL]] (Flash Translation Layer)
+This layer maintains a mapping between $\textbf{PBA} \Rightarrow \textbf{LBA}$.
+*** [[~/UMJI/Flash_Workshop/assets/nand_structure.png][Physical Structure]]
+**** Package(Chip) >> Die >> Plane >> Block(Sector) >> Page >> Cell
+*Typically or by default*, *Page* is the *minimal unit of Programme*, while *Block* is the *minimal unit of Erase*
+These are physical allocation of *cells*, aimed for
+**** So let's focus on "Cell"
+***** Structure
+****** [[~/UMJI/Flash_Workshop/assets/cell_struct.png][What]]
+****** How is 0 & 1 defined
+***** Operations
+****** Read [[~/UMJI/Flash_Workshop/assets/read_0.png][0]]/[[~/UMJI/Flash_Workshop/assets/read_1.png][1]]
+****** Programme [[~/UMJI/Flash_Workshop/assets/programme_0.png][1->0]] (Fowler-Nordheim Tunneling)
+****** Erase [[~/UMJI/Flash_Workshop/assets/erase_1.png][0->1]]
+***** There R [[~/UMJI/Flash_Workshop/assets/types.png]["Types"]] (SLC/MLC/TLC/QLC, etc.)
+*** Logical Operations on Larger Scale
+**** Programme by ?
+**** Read by ?
+**** Erase by ?
+*** Questions that may worth your attention
+***** Is the logic of operation-by-part physically irreplacable?
+Nope. These behaviors are wholly defined by *FTL*.
+***** Is it beneficial, with any cost?
+(Yes, parallel block-wise 'erase saves wait-time before 'programme thus improves 'programme process. Cost -> Wearing off problem.)
+***** Wearing off problem: which process damages the cells? How to optimize?
+(P/E Loops, destructive to the oxide in MOSFET.)
+***** Where is the FTL/mapping stored?
+*OP* (Over Provisioning, sectors spared in the flash)
+***** Benefits of FTL & OP?
+Provide "backup" cells (simple modification of mapping)
+*Wear levelling*
+OP stores FTL mapping
+Write amplification (never mind)
+***** Implementation of Multi-Layer-Cell
+Single FG, multiple threshold voltage, up to amount of charge loaded in FG.
+***** Density at the cost of life-span, why?
+
+** Flash_disk Concepts Explained (whc)
